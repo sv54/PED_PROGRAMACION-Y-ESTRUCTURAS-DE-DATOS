@@ -346,6 +346,7 @@ TABBCalendario TABBCalendario::operator-( const TABBCalendario& tabb) const{
 TVectorCalendario TABBCalendario::ABBCamino(const TListaCalendario& lista) {
 	TVectorCalendario vect(1);
 	TListaPos pos= lista.Primera();
+	TNodoABB *aux = raiz;
 	TCalendario cal;
 	int numItems = 1;
 	
@@ -354,10 +355,13 @@ TVectorCalendario TABBCalendario::ABBCamino(const TListaCalendario& lista) {
 
 	for (TListaPos i = lista.Primera(); !i.EsVacia(); i = i.Siguiente()) {
 		int contador = 1;
+		raiz = aux;
 		if (!this->Buscar(lista.Obtener(i))) {
 			cal = lista.Obtener(i);
 			this->Insertar(lista.Obtener(i));
 			while (raiz->item != cal) {
+				if (vect.Tamano() == numItems - 1)
+					vect.Redimensionar(numItems);
 				vect[numItems] = raiz->item;
 				if (raiz->item > cal)
 					raiz = raiz->iz.raiz;
@@ -368,7 +372,11 @@ TVectorCalendario TABBCalendario::ABBCamino(const TListaCalendario& lista) {
 					vect.Redimensionar(numItems);
 				contador++;
 			}
+			
 			vect[numItems] = raiz->item;
+			numItems++;
+			
+			//cout << vect << endl;
 		}
 	}
 
