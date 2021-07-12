@@ -377,7 +377,7 @@ using namespace std;
 						return false;
 					else if (mensaje != NULL && c.mensaje == NULL)
 						return true;
-					else if (strlen(mensaje) > strlen(c.mensaje))
+					else if (strlen(mensaje) < strlen(c.mensaje))
 						return true;
 					else
 						return false;

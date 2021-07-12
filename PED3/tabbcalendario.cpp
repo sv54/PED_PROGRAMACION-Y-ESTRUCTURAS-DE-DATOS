@@ -170,7 +170,7 @@ bool TABBCalendario::Borrar(const TCalendario& cal) {
 	TNodoABB* aux;
 	bool borrado = false;
 	TCalendario mayor;
-	if (raiz != NULL) {
+	if (raiz != NULL && Buscar(cal)) {
 		if (raiz->item > cal) 
 			borrado = raiz->iz.Borrar(cal);
 		else if (raiz->item < cal)
@@ -344,13 +344,13 @@ TABBCalendario TABBCalendario::operator-( const TABBCalendario& tabb) const{
 //Examen
 
 TVectorCalendario TABBCalendario::ABBCamino(const TListaCalendario& lista) {
-	TVectorCalendario vect(1);
+	TVectorCalendario vect(0);
 	TListaPos pos= lista.Primera();
 	TNodoABB *aux = raiz;
 	TCalendario cal;
 	int numItems = 1;
 	
-	if (lista.EsVacia() || this->EsVacio())
+	if (lista.EsVacia() || this->EsVacio() || lista.Obtener(pos).EsVacio())
 		return vect;
 
 	for (TListaPos i = lista.Primera(); !i.EsVacia(); i = i.Siguiente()) {
